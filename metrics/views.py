@@ -4,17 +4,18 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from metrics.providers import MetricsProvider
-from metrics.serializers import MetricsSerializer
+from metrics.serializers import MetricsSerializer, MetricGroupByRequestSerializer
 
 
 class MetricsViewSet(ViewSet):
     metrics_provider = MetricsProvider()
 
     def list(self, request):
+        group_by_serializer = MetricGroupByRequestSerializer(data=request.GET)
+        group_by_serializer.is_valid(raise_exception=True)
 
-        group_by_fields = request.GET.get('group_by')
-        if group_by_fields:
-            group_by_fields = group_by_fields.split(';')
+        group_by_fields = group_by_serializer.validated_data.get('group_by')
+
         metrics = self.metrics_provider.list(request.GET, group_by_fields)
 
         response_data = MetricsSerializer(instance=metrics, many=True).data
