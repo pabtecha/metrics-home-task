@@ -28,7 +28,7 @@ class MetricQueryParamsRequestSerializer(serializers.Serializer):
             try:
                 fields = value.split(',')
             except Exception:
-                raise serializers.ValidationError("Not a valid field format. Please separate values with ;")
+                raise serializers.ValidationError("Not a valid field format. Please separate values with ,")
 
             if any(map(lambda x: x not in GROUP_BY_CHOICES, fields)):
                 raise serializers.ValidationError("Not a valid field value. "
