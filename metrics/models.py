@@ -11,3 +11,7 @@ class Metrics(models.Model):
     installs = models.IntegerField()
     spend = models.FloatField()
     revenue = models.FloatField()
+
+    @property
+    def cpi(self):
+        return self.spend / self.installs
