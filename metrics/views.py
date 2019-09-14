@@ -15,8 +15,9 @@ class MetricsViewSet(ViewSet):
         group_by_serializer.is_valid(raise_exception=True)
 
         group_by_fields = group_by_serializer.validated_data.get('group_by')
+        order_by_field = request.GET.get('order_by')
 
-        metrics = self.metrics_provider.list(request.GET, group_by_fields)
+        metrics = self.metrics_provider.list(request.GET, group_by_fields, order_by_field)
 
         response_data = MetricsSerializer(instance=metrics, many=True).data
         return Response({"data": response_data}, status=status.HTTP_200_OK)

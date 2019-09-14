@@ -7,11 +7,14 @@ from metrics.filters import MetricsFilter
 class MetricsProvider:
     queryset = Metrics.objects.all()
 
-    def list(self, filter_args: dict, group_by: str = None):
+    def list(self, filter_args: dict, group_by: list = None, order_by: str = None):
         list_queryset = self.get_filtered_queryset(filter_args)
 
         if group_by:
             list_queryset = self.group_by_queryset(list_queryset, group_by)
+
+        if order_by:
+            list_queryset = self.order_queryset(list_queryset, order_by)
 
         return list_queryset
 
@@ -19,9 +22,13 @@ class MetricsProvider:
         return MetricsFilter(filter_args, queryset=self.queryset).qs
 
     @staticmethod
-    def group_by_queryset(queryset, group_by_fields: list):
-        return queryset.values(*group_by_fields).annotate(impressions=Sum('impressions'),
+    def group_by_queryset(queryset, fields: list):
+        return queryset.values(*fields).annotate(impressions=Sum('impressions'),
                                                           clicks=Sum('clicks'),
                                                           installs=Sum('installs'),
                                                           spend=Sum('spend'),
                                                           revenue=Sum('revenue'))
+
+    @staticmethod
+    def order_queryset(queryset, field: str):
+        return queryset.order_by(field)
