@@ -10,14 +10,13 @@ class MetricsViewSet(ViewSet):
     metrics_provider = MetricsProvider()
 
     def list(self, request):
-        group_by_serializer = MetricQueryParamsRequestSerializer(data=request.GET)
-        group_by_serializer.is_valid(raise_exception=True)
+        query_params_serializer = MetricQueryParamsRequestSerializer(data=request.GET)
+        query_params_serializer.is_valid(raise_exception=True)
 
-        group_by_fields = group_by_serializer.validated_data.get('group_by')
-        order_by_field = request.GET.get('order_by')
-        order_by_type = request.GET.get('order_type')
-
-        metrics = self.metrics_provider.list(request.GET, group_by_fields, order_by_field, order_by_type)
+        metrics = self.metrics_provider.list(filter_args=request.GET,
+                                             group_by=query_params_serializer.validated_data.get('group_by'),
+                                             order_by=query_params_serializer.validated_data.get('order_by'),
+                                             order_type=query_params_serializer.validated_data.get('order_type'))
 
         response_data = MetricsSerializer(instance=metrics, many=True).data
         return Response({"data": response_data}, status=status.HTTP_200_OK)
