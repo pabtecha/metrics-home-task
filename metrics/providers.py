@@ -1,4 +1,4 @@
-from django.db.models import Sum, F, FloatField
+from django.db.models import Sum, F
 
 from metrics.enumerations import OrderByTypes
 from metrics.models import Metrics
