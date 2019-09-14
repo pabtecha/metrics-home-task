@@ -15,7 +15,7 @@ metrics_json = [
      'installs': '76',
      'spend': '148.2',
      'revenue': '149.04'},
-    {'date': '2017-05-17',
+    {'date': '2017-08-17',
      'channel': 'adcolony',
      'country': 'ES',
      'os': 'android',
@@ -24,7 +24,7 @@ metrics_json = [
      'installs': '76',
      'spend': '148.2',
      'revenue': '149.04'},
-    {'date': '2017-05-17',
+    {'date': '2017-09-17',
      'channel': 'adcolony',
      'country': 'US',
      'os': 'ios',
@@ -33,7 +33,7 @@ metrics_json = [
      'installs': '76',
      'spend': '148.2',
      'revenue': '149.04'},
-    {'date': '2017-05-17',
+    {'date': '2017-05-16',
      'channel': 'unityads',
      'country': 'US',
      'os': 'ios',
@@ -79,3 +79,29 @@ class MetricsViewSetTest(TestCase):
 
         res = self.client.get('/metrics', params)
         self.assertEqual(len(res.json()["data"]), 1)
+
+    def test_metrics_with_same_day_date_range_filter_returns_filtered_elements(self):
+        metric = Metrics(**metrics_json[0])
+        metric.save()
+        metric2 = Metrics(**metrics_json[1])
+        metric2.save()
+        metric3 = Metrics(**metrics_json[2])
+        metric3.save()
+
+        params = {"date_from": "2017-08-17", "date_to": "2017-08-17"}
+
+        res = self.client.get('/metrics', params)
+        self.assertEqual(len(res.json()["data"]), 1)
+
+    def test_metrics_with_date_range_filter_returns_filtered_elements(self):
+        metric = Metrics(**metrics_json[0])
+        metric.save()
+        metric2 = Metrics(**metrics_json[1])
+        metric2.save()
+        metric3 = Metrics(**metrics_json[2])
+        metric3.save()
+
+        params = {"date_from": "2017-05-15", "date_to": "2017-08-17"}
+
+        res = self.client.get('/metrics', params)
+        self.assertEqual(len(res.json()["data"]), 2)
