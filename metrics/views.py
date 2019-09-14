@@ -1,17 +1,16 @@
-from django.db.models import Sum
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from metrics.providers import MetricsProvider
-from metrics.serializers import MetricsSerializer, MetricGroupByRequestSerializer
+from metrics.serializers import MetricsSerializer, MetricQueryParamsRequestSerializer
 
 
 class MetricsViewSet(ViewSet):
     metrics_provider = MetricsProvider()
 
     def list(self, request):
-        group_by_serializer = MetricGroupByRequestSerializer(data=request.GET)
+        group_by_serializer = MetricQueryParamsRequestSerializer(data=request.GET)
         group_by_serializer.is_valid(raise_exception=True)
 
         group_by_fields = group_by_serializer.validated_data.get('group_by')
