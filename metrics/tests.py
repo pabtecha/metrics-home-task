@@ -91,3 +91,14 @@ class MetricsViewSetTest(TestCase):
         params = {"group_by": "country;os"}
         res = self.client.get(self.metrics_url, params)
         self.assertEqual(len(res.json()["data"]), 3)
+
+    def test_list_with_group_by_and_invalid_fields_returns_400_response(self):
+        params = {"group_by": "not_a_field"}
+        res = self.client.get(self.metrics_url, params)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_list_with_group_by_and_invalid_format_returns_400_response(self):
+        params = {"group_by": "country-os"}
+        res = self.client.get(self.metrics_url, params)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
