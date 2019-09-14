@@ -109,3 +109,9 @@ class MetricsViewSetTest(TestCase):
         response_data = res.json()['data']
         self.assertEqual(response_data, sorted(response_data, key=lambda x: x['date']))
 
+    def test_list_with_order_by_returns_ordered_values_desc(self):
+        params = {"order_by": "date", "order_type": "desc"}
+
+        res = self.client.get(self.metrics_url, params)
+        response_data = res.json()['data']
+        self.assertEqual(response_data, sorted(response_data, key=lambda x: x['date'], reverse=True))
