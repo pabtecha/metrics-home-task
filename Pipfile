@@ -9,6 +9,7 @@ verify_ssl = true
 djangorestframework = "*"
 django = "*"
 psycopg2-binary = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.6"

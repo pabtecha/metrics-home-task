@@ -39,14 +39,15 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'rest_framework'
+    'rest_framework',
+    'django_filters'
 ]
 
 ADJUST_APPS = [
     'metrics'
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS +ADJUST_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + ADJUST_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
