@@ -102,3 +102,10 @@ class MetricsViewSetTest(TestCase):
         res = self.client.get(self.metrics_url, params)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_list_with_order_by_returns_ordered_values(self):
+        params = {"order_by": "date"}
+
+        res = self.client.get(self.metrics_url, params)
+        response_data = res.json()['data']
+        self.assertEqual(response_data, sorted(response_data, key=lambda x: x['date']))
+
