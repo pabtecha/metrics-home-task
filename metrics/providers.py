@@ -19,9 +19,9 @@ class MetricsProvider:
         return MetricsFilter(filter_args, queryset=self.queryset).qs
 
     @staticmethod
-    def group_by_queryset(queryset, group_by_field: str):
-        return queryset.values(group_by_field).annotate(impressions=Sum('impressions'),
-                                                        clicks=Sum('clicks'),
-                                                        installs=Sum('installs'),
-                                                        spend=Sum('spend'),
-                                                        revenue=Sum('revenue'))
+    def group_by_queryset(queryset, group_by_fields: list):
+        return queryset.values(*group_by_fields).annotate(impressions=Sum('impressions'),
+                                                          clicks=Sum('clicks'),
+                                                          installs=Sum('installs'),
+                                                          spend=Sum('spend'),
+                                                          revenue=Sum('revenue'))
