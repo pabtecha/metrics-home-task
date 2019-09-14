@@ -115,3 +115,9 @@ class MetricsViewSetTest(TestCase):
         res = self.client.get(self.metrics_url, params)
         response_data = res.json()['data']
         self.assertEqual(response_data, sorted(response_data, key=lambda x: x['date'], reverse=True))
+
+    def test_list_ordered_by_invalid_field(self):
+        params = {"order_by": "not_a_field"}
+
+        res = self.client.get(self.metrics_url, params)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
