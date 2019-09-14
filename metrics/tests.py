@@ -88,7 +88,7 @@ class MetricsViewSetTest(TestCase):
         self.assertEqual(len(res.json()["data"]), 2)
 
     def test_list_with_group_by_multiple_fields_returns_grouped_elements(self):
-        params = {"group_by": "country;os"}
+        params = {"group_by": "country,os"}
         res = self.client.get(self.metrics_url, params)
         self.assertEqual(len(res.json()["data"]), 3)
 

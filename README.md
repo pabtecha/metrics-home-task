@@ -31,3 +31,10 @@ Common API use cases:
     Show CPI and spend for Canada (CA) broken down by channel ordered by CPI in descending order. Please think carefully which is an appropriate aggregate function for CPI.
 
 Please make sure you have single API endpoint that is compliant with all use-cases described above and explicitly specify urls for each of 4 cases in your Readme.
+
+## USE CASE URLS
+
+ 1. http://localhost:8000/metrics?group_by=channel,country&order_by=clicks&date_to=2017-06-01&order_tpe=desc
+ 2. http://localhost:8000/metrics?group_by=date&order_by=date&date_from=2017-05-01&date_to=2017-05-31
+ 3. http://localhost:8000/metrics?group_by=os&order_by=revenue&date_from=2017-06-01&date_to=2017-06-01&order_tpe=desc
+ 4. http://localhost:8000/metrics?group_by=channel&order_by=cpi&order_tpe=desc&country=CA

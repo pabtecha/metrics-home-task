@@ -5,6 +5,8 @@ from metrics.models import Metrics
 
 
 class MetricsSerializer(serializers.ModelSerializer):
+    cpi = serializers.ReadOnlyField()
+
     class Meta:
         model = Metrics
         exclude = ['id']
@@ -24,7 +26,7 @@ class MetricQueryParamsRequestSerializer(serializers.Serializer):
     def validate_group_by(self, value):
         if value:
             try:
-                fields = value.split(';')
+                fields = value.split(',')
             except Exception:
                 raise serializers.ValidationError("Not a valid field format. Please separate values with ;")
 

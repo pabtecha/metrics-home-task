@@ -1,5 +1,6 @@
-from django.db.models import Sum
+from django.db.models import Sum, F, FloatField
 
+from metrics.enumerations import OrderByTypes
 from metrics.models import Metrics
 from metrics.filters import MetricsFilter
 
@@ -24,13 +25,14 @@ class MetricsProvider:
     @staticmethod
     def group_by_queryset(queryset, fields: list):
         return queryset.values(*fields).annotate(impressions=Sum('impressions'),
-                                                          clicks=Sum('clicks'),
-                                                          installs=Sum('installs'),
-                                                          spend=Sum('spend'),
-                                                          revenue=Sum('revenue'))
+                                                 clicks=Sum('clicks'),
+                                                 installs=Sum('installs'),
+                                                 spend=Sum('spend'),
+                                                 revenue=Sum('revenue'),
+                                                 cpi=F('spend') / F('revenue'))
 
     @staticmethod
     def order_queryset(queryset, field: str, type: str):
-        if type and type == 'desc':
+        if type and type == OrderByTypes.DESC:
             field = '-{}'.format(field)
         return queryset.order_by(field)
