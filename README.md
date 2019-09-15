@@ -35,6 +35,6 @@ Please make sure you have single API endpoint that is compliant with all use-cas
 ## USE CASE URLS
 
  1. http://localhost:8000/metrics?group_by=channel,country&order_by=clicks&date_to=2017-06-01&order_tpe=desc
- 2. http://localhost:8000/metrics?group_by=date&order_by=date&date_from=2017-05-01&date_to=2017-05-31
- 3. http://localhost:8000/metrics?group_by=os&order_by=revenue&date_from=2017-06-01&date_to=2017-06-01&order_tpe=desc
+ 2. http://localhost:8000/metrics?group_by=date&order_by=date&date_from=2017-05-01&date_to=2017-05-31&os=ios
+ 3. http://localhost:8000/metrics?group_by=os&order_by=revenue&date_from=2017-06-01&date_to=2017-06-01&order_tpe=desc&country=US
  4. http://localhost:8000/metrics?group_by=channel&order_by=cpi&order_tpe=desc&country=CA
